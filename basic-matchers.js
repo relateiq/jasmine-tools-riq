@@ -110,7 +110,7 @@
             }
             var lastParent = element;
             do {
-                if (lastParent.length === 0 || lastParent.css('display') === 'none' || lastParent.hasClass('ng-hide')) {
+                if (lastParent.length === 0 || (lastParent[0] !== window && lastParent[0] !== document && (lastParent.css('display') === 'none' || lastParent.hasClass('ng-hide')))) {
                     return false;
                 }
                 lastParent = lastParent.parent();
