@@ -2,9 +2,9 @@ var $ = require('jquery');
 
 exports.defineBasicMatcher =
     function defineBasicMatcher(passFn, messageFn) {
-        return function () {
+        return function() {
             return {
-                compare: function (actual, expected) {
+                compare: function(actual, expected) {
                     var argsArray = Array.prototype.slice.call(arguments);
                     var pass = passFn.apply(this, argsArray);
                     argsArray.push(pass);
@@ -16,7 +16,7 @@ exports.defineBasicMatcher =
                 }
             };
         };
-    };
+};
 
 exports.expectedObjectWithNot = function expectedObjectWithNot(actual, pass, obj) {
     try {
@@ -24,30 +24,27 @@ exports.expectedObjectWithNot = function expectedObjectWithNot(actual, pass, obj
     } catch (e) {
         actual = 'actual';
     }
-    return 'Expected ' + actual + (!pass ? '' : ' not' );
+    return 'Expected ' + actual + (!pass ? '' : ' not');
 };
 
-exports.angularDeps = function () {
+exports.angularDeps = function() {
     var self = this;
 
-    try {
-        var depNames = Array.prototype.slice.call(arguments, 0);
-        depNames.push(function actualInjectedFunction() {
-            var depsArray = Array.prototype.slice.call(arguments, 0);
-            depsArray.forEach(function (dep, i) {
-                self[depNames[i]] = dep;
-            });
+    var depNames = Array.prototype.slice.call(arguments, 0);
+    depNames.push(function actualInjectedFunction() {
+        var depsArray = Array.prototype.slice.call(arguments, 0);
+        depsArray.forEach(function(dep, i) {
+            self[depNames[i]] = dep;
         });
-        inject.call(this, depNames);
-    } catch (e) {
-        console.log(e);
-    }
+    });
+    inject.call(this, depNames);
+
 };
 
-exports.lazyLoad = function (obj, name, createFn) {
+exports.lazyLoad = function(obj, name, createFn) {
     var prop;
     Object.defineProperty(obj, name, {
-        get: function () {
+        get: function() {
             if (!prop) {
                 prop = createFn();
             }
@@ -56,14 +53,14 @@ exports.lazyLoad = function (obj, name, createFn) {
     })
 };
 
-exports.findDTS = function (dts) {
+exports.findDTS = function(dts) {
     return $('[dts="' + dts + '"]');
 };
 
-exports.findDTSWithinElement = function (element, dts) {
+exports.findDTSWithinElement = function(element, dts) {
     return element.find('[dts="' + dts + '"]');
 };
 
-exports.findDTSIn$Element = function (self, dts) {
+exports.findDTSIn$Element = function(self, dts) {
     return findDTSWithinElement(self.$element, dts);
 };
