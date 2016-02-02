@@ -102,8 +102,8 @@
             return jasmine.getEnv().equals_(elem.css('display'), ('none'));
         }),
 
-        //determines visibillity based on display none for now irrespective of attachement to the document
-        toBeVisible: tools.defineBasicMatcher(function(actual) {
+        // determines visibillity based on display none for now irrespective of attachement to the document
+        toBeDisplayable: tools.defineBasicMatcher(function(actual) {
             var element = actual;
             if (!element || !angular.isFunction(element.parent)) {
                 return false;
