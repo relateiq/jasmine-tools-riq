@@ -2,6 +2,10 @@
 
     var tools = require('jasmine-tools-riq');
 
+    function isFunction(fn) {
+        return typeof fn === 'function';
+    }
+
     function addFieldMatcher(matchers, fieldName) {
         matchers[fieldName + 'ToBe'] = function() {
             return {
@@ -58,7 +62,7 @@
                         if (!argsForCall) {
                             allArrgs = false;
                         } else {
-                            if (angular.isArray(args)) {
+                            if (Array.isArray(args)) {
                                 args.forEach(function(arg, index) {
                                     if (arg !== argsForCall[index]) {
                                         allArrgs = false;
@@ -123,8 +127,8 @@
             var spy = actual;
             var hasName = spy.calls.argsFor(0)[0] === name;
             var hasElem = !elem || spy.calls.argsFor(0)[1] === elem;
-            var isFunction = hasElem && angular.isFunction(spy.calls.argsFor(0)[2]) || angular.isFunction(spy.calls.argsFor(0)[1]);
-            return hasName && hasElem && isFunction;
+            var isAFunction = hasElem && isFunction(spy.calls.argsFor(0)[2]) || isFunction(spy.calls.argsFor(0)[1]);
+            return hasName && hasElem && isAFunction;
         }),
         toHaveBeenCalledWithAllPointsInRange: function() {
             return {

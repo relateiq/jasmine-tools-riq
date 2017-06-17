@@ -1,5 +1,10 @@
 (function() {
 
+    function isFunction(fn) {
+        return typeof fn === 'function';
+    }
+
+
     function makeFakePosRange(t, l, r, b) {
         return {
             top: t,
@@ -39,21 +44,21 @@
     var matchers = {
 
         toBeANumber: tools.defineBasicMatcher(function(actual) {
-            return angular.isNumber(actual);
+            return typeof actual === 'number';
         }),
         toBeAFunction: tools.defineBasicMatcher(function(actual) {
-            return angular.isFunction(actual);
+            return typeof actual === 'function';
         }),
 
-        toBeAnObject: tools.defineBasicMatcher(function(actual) {
-            return angular.isObject(actual);
+        toBeAnObject: tools.defineBasicMatcher(function(value) {
+            return value !== null && typeof value === 'object';
         }),
 
         toBeAnArray: tools.defineBasicMatcher(function(actual) {
-            return angular.isArray(actual);
+            return Array.isArray(actual);
         }),
         toBeAString: tools.defineBasicMatcher(function(actual) {
-            return angular.isString(actual);
+            return typeof actual === 'string';
         }),
         toBeNully: tools.defineBasicMatcher(function(actual) {
             return actual === undefined || actual === null;
@@ -105,7 +110,7 @@
         // determines visibillity based on display none for now irrespective of attachement to the document
         toBeDisplayable: tools.defineBasicMatcher(function(actual) {
             var element = actual;
-            if (!element || !angular.isFunction(element.parent)) {
+            if (!element || !isFunction(element.parent)) {
                 return false;
             }
             var lastParent = element;
@@ -129,7 +134,7 @@
         }),
 
         toContainAny: tools.defineBasicMatcher(function(actual, val) {
-            return angular.isFunction(actual.any) && actual.any(val);
+            return isFunction(actual.any) && actual.any(val);
         }),
         toHaveOnlyTruthyProperty: tools.defineBasicMatcher(
             function(actual, propertyName, includeFunctionReturnValues) {
