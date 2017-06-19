@@ -23,7 +23,8 @@
         };
     }
 
-    var $ = require && require('jquery') || window.$;
+    var $ = require('jquery');
+    $ = $ || window.$;
 
 
     function makeFakeRange(t, l, h, w) {
